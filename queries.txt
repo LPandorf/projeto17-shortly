@@ -1,0 +1,32 @@
+CREATE TABLE "user" (
+	"id" serial NOT NULL PRIMARY KEY,
+	"name" TEXT NOT NULL,
+	"email" TEXT NOT NULL,
+	"password" TEXT NOT NULL,
+	"createdAt" TIMESTAMP NOT NULL DEFAULT NOW()
+)
+
+
+
+CREATE TABLE "shorts" (
+	"id" serial NOT NULL PRIMARY KEY,
+	"userid" integer NOT NULL REFERENCES "user"("id"),
+	"url" TEXT NOT NULL,
+	"shortlyurl" TEXT NOT NULL,
+	"createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
+	"views" integer NOT NULL DEFAULT 0,
+) 
+
+
+
+CREATE TABLE "session" (
+	"id" serial NOT NULL PRIMARY KEY,
+	"token" TEXT NOT NULL,
+	"userid" integer NOT NULL REFERENCES "user"("id"),
+	"active" BOOLEAN NOT NULL DEFAULT true,
+) 
+
+
+
+
+
