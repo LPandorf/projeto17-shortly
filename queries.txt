@@ -14,7 +14,7 @@ CREATE TABLE "shorts" (
 	"url" TEXT NOT NULL,
 	"shortlyurl" TEXT NOT NULL,
 	"createdAt" TIMESTAMP NOT NULL DEFAULT NOW(),
-	"views" integer NOT NULL DEFAULT 0,
+	"views" integer NOT NULL DEFAULT 0
 ) 
 
 
@@ -23,7 +23,7 @@ CREATE TABLE "session" (
 	"id" serial NOT NULL PRIMARY KEY,
 	"token" TEXT NOT NULL,
 	"userid" integer NOT NULL REFERENCES "user"("id"),
-	"active" BOOLEAN NOT NULL DEFAULT true,
+	"active" BOOLEAN NOT NULL DEFAULT true
 ) 
 
 
