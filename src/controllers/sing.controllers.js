@@ -22,7 +22,7 @@ export async function singIn(req,res){
             `INSERT INTO session (token,"userId") VALUES ($1,$2)`,
             [token, user.id]
         );
-        return res.status(200).send("{ token: "+token+" }");
+        return res.status(200).send({token});
     }
 
     res.sendStatus(401);
