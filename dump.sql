@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 14.6 (Ubuntu 14.6-0ubuntu0.22.04.1)
--- Dumped by pg_dump version 14.6 (Ubuntu 14.6-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.7 (Ubuntu 14.7-0ubuntu0.22.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -28,7 +28,8 @@ CREATE TABLE public.session (
     id integer NOT NULL,
     token text NOT NULL,
     active boolean DEFAULT true NOT NULL,
-    "userId" integer NOT NULL
+    "userId" integer NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -144,49 +145,39 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: session; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.session VALUES (1, 'af4f4272-297c-4f16-8367-2d3b569cd87e', true, 1);
-INSERT INTO public.session VALUES (2, 'd21378c1-6741-429c-b974-3b70d61b484a', true, 1);
-INSERT INTO public.session VALUES (3, '5539c605-7baf-49e5-9798-9ba26caf6945', true, 1);
 
 
 --
 -- Data for Name: shorts; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.shorts VALUES (2, 'https://www.google.com.br', 'vGF-7OPk', 1, '2023-03-02 22:02:48.671102', 0);
-INSERT INTO public.shorts VALUES (3, 'https://www.google.com.br', 'U3sLq5XB', 1, '2023-03-02 22:03:30.498145', 0);
-INSERT INTO public.shorts VALUES (4, 'https://www.google.com.br', 'MjWny-sw', 1, '2023-03-02 22:03:32.677367', 0);
-INSERT INTO public.shorts VALUES (5, 'https://www.google.com.br', 'HAx4OXKl', 1, '2023-03-02 22:03:34.213844', 0);
-INSERT INTO public.shorts VALUES (6, 'https://www.google.com.br', 'AJbMsMed', 1, '2023-03-02 22:39:41.899222', 0);
-INSERT INTO public.shorts VALUES (7, 'https://www.gartic.com.br', 'GGS7jbo_', 1, '2023-03-02 22:41:35.469411', 1);
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'joao@driven.com.br', '$2b$12$8kW4QMMu2TnYtUgxCsbE5.d/CFhgmRu4nQce58ARvRJX2ClSxy49W', 'João', '2023-03-02 19:14:07.050808');
 
 
 --
 -- Name: session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.session_id_seq', 3, true);
+SELECT pg_catalog.setval('public.session_id_seq', 1, false);
 
 
 --
 -- Name: shorts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.shorts_id_seq', 7, true);
+SELECT pg_catalog.setval('public.shorts_id_seq', 1, false);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+SELECT pg_catalog.setval('public.users_id_seq', 1, false);
 
 
 --
