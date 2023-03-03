@@ -48,7 +48,7 @@ export async function userById(req,res){
                 id: x.id,
                 shortUrl: x.shortUrl,
                 url: x.url,
-                visitCount: x.visitCount
+                visitCount: shortenedUrls[x].visitCount
             })
         });
 
