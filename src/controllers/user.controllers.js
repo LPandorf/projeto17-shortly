@@ -20,7 +20,7 @@ export async function singUp(req, res){
             `INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`,
             [name,email,hashedPassword]
         );
-        
+
         res.sendStatus(201);
     }catch(err){
         return res.status(500).send(err.message);
@@ -43,7 +43,14 @@ export async function userById(req,res){
             [user.id]
         );
 
-        const urls=urlData.rows;
+        const urls=urlData.rows.map((x)=>{
+            return({
+                id: x.id,
+                shortUrl: x.shortUrl,
+                url: x.url,
+                visitCount: x.visitCount
+            })
+        });
 
         res.send({
             id: user.id,
