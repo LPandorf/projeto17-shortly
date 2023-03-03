@@ -19,3 +19,90 @@ export async function short(req, res) {
         return res.status(500).send(err.message);
     }
 }
+
+export async function urlById(req, res){
+    const {id} = req.params;
+
+    try{
+        const data= await connection.query(
+            `SELECT * FROM shorts WHERE id=$1`,
+            [id]
+        );
+
+        if(data.rowCount===0){
+            return res.sendStatus(404)
+        }
+
+        const [url]=data.rows;
+
+        const urlBody={
+            id: url.id,
+            shortUrl: url.shortUrl,
+            url: url.url
+        }
+
+        res.send(urlBody);
+    }catch(err){
+        return res.status(500).send(err.message);
+    }
+}
+
+export async function openNewUrl(req, res) {
+    const {shortUrl}=req.params;
+    console.log(shortUrl);
+    console.log("!!!!!");
+    console.log(req.params);
+    try{
+        const data = await connection.query(
+            `SELECT * FROM shorts WHERE "shortUrl"=$1`,
+            [shortUrl]
+        );
+            /* console.log(data); */
+        if(data.rowCount===0){
+            return res.sendStatus(404);
+        }
+
+        const url = data.rows[0];
+
+        await connection.query(
+            `UPDATE shorts SET "views"="views"+1 WHERE id=$1`,
+            [url.id]
+        );
+
+        res.redirect(url.url);
+    }catch(err){
+        return res.status(500).send(err.message);
+    }
+}
+
+export async function urlDelete(req, res) {
+    const {id}=req.params;
+    const {user}=res.locals;
+    console.log(user,id);
+
+    try{
+        const data = await connection.query(
+            `SELECT * FROM shorts WHERE id=$1`,
+            [id]
+        );
+            console.log("11")
+        if(data.rowCount===0){
+            return res.sendStatus(404);
+        }
+        console.log("12")
+        const [url]=data.rows;
+        console.log("13")
+        if(url.userId!==user.id){
+            return res.sendStatus(401);
+        }
+
+        await connection.query(
+            `DELETE FROM shorts WHERE id=$1`,
+            [id]
+        );
+
+        res.sendStatus(204);
+    }catch(err){
+        return res.status(500).send(err.message)
+    }
+}
