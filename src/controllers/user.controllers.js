@@ -5,7 +5,6 @@ export async function singUp(req, res){
     const {email,name,password}=req.body;
     
     try{
-        console.log("4");
         const exist= await connection.query(
             "SELECT * FROM users WHERE email=$1",
             [email]
@@ -21,7 +20,7 @@ export async function singUp(req, res){
             `INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`,
             [name,email,hashedPassword]
         );
-        console.log("8");
+        
         res.sendStatus(201);
     }catch(err){
         return res.status(500).send(err.message);

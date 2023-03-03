@@ -2,7 +2,6 @@ import { nanoid } from "nanoid";
 import { connection } from "../db.js";
 
 export async function short(req, res) {
-    console.log("2")
     const {id}=res.locals.user;
     const {url}=req.body;
 
@@ -49,15 +48,13 @@ export async function urlById(req, res){
 
 export async function openNewUrl(req, res) {
     const {shortUrl}=req.params;
-    console.log(shortUrl);
-    console.log("!!!!!");
-    console.log(req.params);
+
     try{
         const data = await connection.query(
             `SELECT * FROM shorts WHERE "shortUrl"=$1`,
             [shortUrl]
         );
-            /* console.log(data); */
+            
         if(data.rowCount===0){
             return res.sendStatus(404);
         }
@@ -78,20 +75,19 @@ export async function openNewUrl(req, res) {
 export async function urlDelete(req, res) {
     const {id}=req.params;
     const {user}=res.locals;
-    console.log(user,id);
 
     try{
         const data = await connection.query(
             `SELECT * FROM shorts WHERE id=$1`,
             [id]
         );
-            console.log("11")
+
         if(data.rowCount===0){
             return res.sendStatus(404);
         }
-        console.log("12")
+
         const [url]=data.rows;
-        console.log("13")
+        
         if(url.userId!==user.id){
             return res.sendStatus(401);
         }
